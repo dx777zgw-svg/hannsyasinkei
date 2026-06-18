@@ -205,7 +205,7 @@
 
 <div class="container">
     <h1>カオス反射測定器</h1>
-    <div class="subtitle">Produced by MVP 2.8.6 最終神話スペック</div>
+    <div class="subtitle">Produced by MVP 3.0.7 最終神話スペック</div>
 
     <div class="mode-select">
         <button class="mode-btn active" onclick="setDifficulty('easy')">ゆるん<br>(easy)</button>
@@ -255,7 +255,7 @@
 
 <script>
     // ===================================================
-    // ⚙️ 【環境設定パケット】
+    // ⚙️ 【環境設定パケット】おやっさんの本物アドレス大開国マージ！！！
     // ===================================================
     var googleAppScriptUrl = "https://script.google.com/macros/s/AKfycbxqvwesKp2FzdE9ZAVBoXeXtp-97fBKYSiOpda7BnhLBd6z5hk9LoDFeV9enUJ9P-Ep/exec"; 
     var gameWebsiteUrl = "https://dx777zgw-svg.github.io/hannsyasinkei/"; 
@@ -532,7 +532,7 @@
         
         if (forceCenter || difficulty === "easy") {
             element.style.left = "50%";
-            element.style.top = "50%";
+            element.style.top = "50;"; // 🟢 カンマバグ完全上書き消滅べ！
             element.style.transform = "translate(-50%, -50%)";
         } else if (difficulty === "normal") {
             element.style.transform = "none";
@@ -558,6 +558,17 @@
         }
     }
 
+    // 🏆 【完全一本化デバッグパッチ】ブラウザのアドレスに惑わされず、176行目の本物変数を100%強制ハンダ付け！！！
+    function shareOnX() {
+        var modeName = difficulty.toUpperCase();
+        var tweetText = "【反射神経結果】\n難易度:" + modeName + "で" + score + "点！！！\n\n#いつもカオス診断";
+        
+        var resultUrl = gameWebsiteUrl; 
+        
+        var xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText) + "&url=" + encodeURIComponent(resultUrl);
+        window.open(xUrl, '_blank');
+    }
+
     function targetClicked(event) {
         event.stopPropagation();
         if (currentCollect === "" || currentCollect === "IWAKAN_MODE") return; 
@@ -572,14 +583,6 @@
             playSyntheticSound("good");
         }
         nextQuestion();
-    }
-
-    // 🕳️ 𝕏連動URL完全開国パケットマージ
-    function shareOnX() {
-        var modeName = "難易度:" + difficulty.toUpperCase();
-        var tweetText = "【反射神経結果】\n" + modeName + "で" + score + "点！！！\n\n#いつもカオス診断";
-        var xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText) + "&url=" + encodeURIComponent(gameWebsiteUrl);
-        window.open(xUrl, '_blank');
     }
 
     function endGame() {
@@ -615,9 +618,14 @@
         renderMonument();
     }
 
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMonument();
+    });
+
     function renderMonument() {
         let monumentList = JSON.parse(localStorage.getItem("danger_monument_list")) || [];
         let uiList = document.getElementById("monument-list-ui");
+        if (!uiList) return;
 
         uiList.innerHTML = "";
         if (monumentList.length > 0) {
@@ -649,7 +657,7 @@
             }
             
             data.slice(0, 50).forEach((player, index) => {
-                let li = document.createElement("div"); // liのバグ修正用
+                let li = document.createElement("div"); 
                 li.className = "ranking-item";
                 
                 let rankClass = "";
@@ -706,7 +714,7 @@
             body: JSON.stringify(payload)
         })
         .then(() => {
-            alert("緑のノートに魂のネオンスコアが彫り込まれたべ！👍😏🤟");
+            alert("緑のノートに魂 of ネオンスコアが彫り込まれたべ！👍😏🤟");
             fetchLatestRankings(); 
         })
         .catch(error => alert("電波障害だべ！！！😭❌"));
