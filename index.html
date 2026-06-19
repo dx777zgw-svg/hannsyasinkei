@@ -269,18 +269,19 @@
     var googleAppScriptUrl = "https://script.google.com/macros/s/AKfycbxqvwesKp2FzdE9ZAVBoXeXtp-97fBKYSiOpda7BnhLBd6z5hk9LoDFeV9enUJ9P-Ep/exec"; 
     var gameWebsiteUrl = "https://dx777zgw-svg.github.io/hannsyasinkei/"; 
 
+ 
     // 📦 カオスお題データベース
-    var odaiList = [
-        { type: "ドンペリ", text: "ミルクドンペリ：開けろ", collect: "開けろ", wrong: "閉めろ", color: "#a855f7", neon: "0 0 20px #a855f7" },
-        { type: "ドンペリ", text: "ミルクドンペリ：閉めろ", collect: "閉めろ", wrong: "開けろ", color: "#7c3aed", neon: "0 0 20px #7c3aed" },
-        { type: "いたわれ", text: "いたわれ！：座る", collect: "座る", wrong: "寝る", color: "#f97316", neon: "0 0 20px #f97316" },
-        { type: "いたわれ", text: "いたわれ！：寝る", collect: "寝る", wrong: "座る", color: "#ea580c", neon: "0 0 20px #ea580c" },
-        { type: "違和感", text: "違和感（🤪）を狙い撃て！", color: "#06b6d4", neon: "0 0 20px #06b6d4" },
-        { type: "違和感", text: "違和感（🤪）を狙い撃て！", color: "#0d9488", neon: "0 0 20px #0d9488" },
-        { type: "違和感", text: "違和感（🤪）を狙い撃て！", color: "#10b981", neon: "0 0 20px #10b981" },
-        { type: "休み", text: "【休み】何も押してはいけない！", collect: "休み", wrong: "", color: "#64748b", neon: "0 0 10px #64748b" }
-    ];
-
+var odaiList = [
+    { type: "ドンペリ", text: "ミルクドンペリ：開けろ", collect: "開けろ", wrong: "閉めろ", color: "#a855f7", neon: "0 0 20px #a855f7" },
+    { type: "ドンペリ", text: "ミルクドンペリ：閉めろ", collect: "閉めろ", wrong: "開けろ", color: "#7c3aed", neon: "0 0 20px #7c3aed" },
+    { type: "いたわれ", text: "いたわれ！：座れ", collect: "座れ", wrong: "寝ろ", color: "#f97316", neon: "0 0 20px #f97316" },
+    { type: "いたわれ", text: "いたわれ！：寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ea580c", neon: "0 0 20px #ea580c" },
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#06b6d4", neon: "0 0 20px #06b6d4" },
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#0d9488", neon: "0 0 20px #0d9488" },
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#10b981", neon: "0 0 20px #10b981" },
+    { type: "休み", text: "【休み】何も押してはいけない！", collect: "休み", wrong: "", color: "#64748b", neon: "0 0 20px #64748b" }
+];
+    
     var difficulty = "easy";
     var score = 0;
     var currentQ = 0;
