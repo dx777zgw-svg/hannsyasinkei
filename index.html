@@ -270,17 +270,27 @@
     var gameWebsiteUrl = "https://dx777zgw-svg.github.io/hannsyasinkei/"; 
 
  
-    // 📦 カオスお題データベース
+    // 📦 カオスお題データベース（反射神経逆手にとるトラップ仕様）
 var odaiList = [
-    { type: "ドンペリ", text: "ミルクドンペリ：開けろ", collect: "開けろ", wrong: "閉めろ", color: "#a855f7", neon: "0 0 20px #a855f7" },
-    { type: "ドンペリ", text: "ミルクドンペリ：閉めろ", collect: "閉めろ", wrong: "開けろ", color: "#7c3aed", neon: "0 0 20px #7c3aed" },
-    { type: "いたわれ", text: "いたわれ！：座れ", collect: "座れ", wrong: "寝ろ", color: "#f97316", neon: "0 0 20px #f97316" },
-    { type: "いたわれ", text: "いたわれ！：寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ea580c", neon: "0 0 20px #ea580c" },
-    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#06b6d4", neon: "0 0 20px #06b6d4" },
-    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#0d9488", neon: "0 0 20px #0d9488" },
-    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#10b981", neon: "0 0 20px #10b981" },
-    { type: "休み", text: "【休み】何も押してはいけない！", collect: "休み", wrong: "", color: "#64748b", neon: "0 0 20px #64748b" }
+    // 🟢 通常パネル（押せばスコア加算！）
+    { type: "ドンペリ", text: "ミルクドンペリ：開けろ", collect: "開ける", wrong: "閉める", color: "#a855f7", neon: "0 0 20px #a855f7", isTrap: false },
+    { type: "ドンペリ", text: "ミルクドンペリ：閉めろ", collect: "閉める", wrong: "開ける", color: "#7c3aed", neon: "0 0 20px #7c3aed", isTrap: false },
+    { type: "いたわれ", text: "いたわれ！：座れ", collect: "座れ", wrong: "寝ろ", color: "#f97316", neon: "0 0 20px #f97316", isTrap: false },
+    { type: "いたわれ", text: "いたわれ！：寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ea580c", neon: "0 0 20px #ea580c", isTrap: false },
+
+    // 🚨 お手つき地雷パネル（おやっさん直伝の逆張りトラップ！0.3秒で消えて押したら-5点！）
+    { type: "ドンペリ", text: "💥トラップ！ミルクドンペリ：開けろ", collect: "閉める", wrong: "開ける", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
+    { type: "ドンペリ", text: "💥トラップ！ミルクドンペリ：閉めろ", collect: "開ける", wrong: "閉める", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
+    { type: "いたわれ", text: "💥トラップ！いたわれ！：座れ", collect: "寝ろ", wrong: "座れ", color: "#ff5500", neon: "0 0 30px #ff5500", isTrap: true },
+    { type: "いたわれ", text: "💥トラップ！いたわれ！：寝ろ", collect: "座れ", wrong: "寝ろ", color: "#ff5500", neon: "0 0 30px #ff5500", isTrap: true },
+
+    // 違和感とお休みは絶対防衛線ホールド！
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#06b6d4", neon: "0 0 20px #06b6d4", isTrap: false },
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#0d9488", neon: "0 0 20px #0d9488", isTrap: false },
+    { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#10b981", neon: "0 0 20px #10b981", isTrap: false },
+    { type: "休み", text: "【休み】何も押してはいけない！", collect: "休み", wrong: "", color: "#64748b", neon: "0 0 20px #64748b", isTrap: false }
 ];
+ 
     
     var difficulty = "easy";
     var score = 0;
