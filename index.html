@@ -389,7 +389,7 @@
 
     <div id="danger-monument-container" class="danger-monument-box">
         <div class="monument-title">💀 𝕎𝕎𝕎 真・人外の輪ネオン記念碑 💀</div>
-        <div class="monument-desc">コンマ2秒の檻（DANGERモード）を完全制覇し、プラス点数を叩き出して無事に生存帰還した超人類の魂の履歴だべ！！！</div>
+        <div class="monument-desc">0.6秒の檻（DANGERモード）を完全制覇し、プラス点数を叩き出して無事に生存帰還した超人類の魂の履歴だべ！！！</div>
         <ul id="monument-list-ui" class="monument-list"></ul>
     </div>
 </div>
@@ -676,7 +676,7 @@ var odaiList = [
         var timeLimit = 10000; 
         if (difficulty === "hard") timeLimit = 5000;
         if (difficulty === "expert") timeLimit = 1500;  
-        if (difficulty === "danger") timeLimit = 200;  
+        if (difficulty === "danger") timeLimit = 600;  
 
         if (currentQuestionData && currentQuestionData.isTrap) {
             timeLimit = 1000; 
