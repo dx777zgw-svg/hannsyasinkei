@@ -36,6 +36,72 @@
             letter-spacing: 1px;
         }
         
+        /* 📖 【新インフラ】親切設計・ネオン作戦指示書（説明ボード） */
+        .instruction-toggle-btn {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #0f172a;
+            color: #38bdf8;
+            border: 1px dashed #38bdf8;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.1);
+        }
+        .instruction-toggle-btn:hover {
+            background: #1e293b;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+        .instruction-box {
+            display: none; /* 初期状態はスマートに格納だべ！ */
+            background: #090d16;
+            border: 1px solid #1f2937;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        }
+        .instruction-title {
+            color: #00ffcc;
+            font-size: 0.95em;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #1f2937;
+            padding-bottom: 5px;
+        }
+        .instruction-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8em;
+            line-height: 1.4;
+        }
+        .instruction-table th, .instruction-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #111827;
+            vertical-align: middle;
+        }
+        .instruction-table th {
+            color: #38bdf8;
+            font-weight: bold;
+            width: 30%;
+        }
+        .instruction-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .badge-normal { background: #1e1b4b; color: #a855f7; border: 1px solid #a855f7; }
+        .badge-trap { background: #450a0a; color: #ff0055; border: 1px solid #ff0055; }
+        .badge-iwakan { background: #064e3b; color: #06b6d4; border: 1px solid #06b6d4; }
+        .badge-yasumi { background: #1f2937; color: #94a3b8; border: 1px solid #64748b; }
+
         /* 🕹️ ネオン難易度セレクター */
         .mode-select { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 4px; }
         .mode-btn {
@@ -95,28 +161,26 @@
             align-items: center;
             box-sizing: border-box;
             padding: 10px;
-        
         }
         #game-target:active { transform: scale(0.95); }
         
         /* 🤪 違和感専用マトリクスコンテナ */
         .iwakan-grid {
-         position: relative; /* 🟢 absoluteから『relative（相対配置）』へ大整形！ */
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 1px;
-    background-color: #00ffcc;
-    box-shadow: 0 0 15px #00ffcc;
-    border-radius: 8px;
-    overflow: hidden;
-    width: 180px;
-    height: 180px;
-    /* 🧠 【大漂流を完全お縄にする定位置ホールド魔法】 */
-    margin: 20px auto 0 auto !important; /* 横方向は自動でど真ん中、上側に20pxの美しい余白！ */
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important; /* ❌ 悪さをしていた古い移動魔法を分子レベルで完全封印！ */
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 1px;
+            background-color: #00ffcc;
+            box-shadow: 0 0 15px #00ffcc;
+            border-radius: 8px;
+            overflow: hidden;
+            width: 180px;
+            height: 180px;
+            margin: 20px auto 0 auto !important;
+            top: 0 !important;
+            left: 0 !important;
+            transform: none !important;
         }
         .iwakan-cell {
             background-color: #090d16; 
@@ -216,6 +280,33 @@
     <h1>カオス反射測定器</h1>
     <div class="subtitle">Produced by MVP 3.0.7 最終神話スペック</div>
 
+    <button id="instruction-toggle" class="instruction-toggle-btn" onclick="toggleInstructions()">📖 ネオン作戦指示書を開く（ルール解説）</button>
+    <div id="instruction-board" class="instruction-box">
+        <div class="instruction-title">📡 盤面マトリクス・コマンド識別仕様</div>
+        <table class="instruction-table">
+            <tr>
+                <th>お題パネル</th>
+                <td><span class="instruction-badge badge-normal">通常</span> ドンペリ/いたわれ</td>
+                <td>右側の **【 】内の文字（開ける/閉める/座れ/寝ろ）** を正しく叩くべし！（成功：+10点）</td>
+            </tr>
+            <tr>
+                <th>地雷パネル</th>
+                <td><span class="instruction-badge badge-trap">注意</span> ➡️ 矢印つき（1秒消滅）</td>
+                <td>人の反射神経を逆手にとる極悪トラップ！ **絶対に押してはいけない！**（誤爆：-5点 / スルーでセーフ）</td>
+            </tr>
+            <tr>
+                <th>違和感モード</th>
+                <td><span class="instruction-badge badge-iwakan">追跡</span> 16マスのマトリクス</td>
+                <td>大量の「😀」の中に1匹だけ潜む **「🤪」を狙い撃て！**（成功：+10点 / 誤爆・時間切れ：-5点）</td>
+            </tr>
+            <tr>
+                <th>お休み耐久</th>
+                <td><span class="instruction-badge badge-yasumi">静止</span> 【休み】</td>
+                <td>文字通り、次の問題が出るまで **「何も押さずに待機」** せよ！（耐久成功：+5点 / フライング：-5点）</td>
+            </tr>
+        </table>
+    </div>
+
     <div class="mode-select">
         <button class="mode-btn active" onclick="setDifficulty('easy')">ゆるん<br>(easy)</button>
         <button class="mode-btn" onclick="setDifficulty('normal')">ふつー<br>(normal)</button>
@@ -278,7 +369,7 @@ var odaiList = [
     { type: "いたわれ", text: "いたわれ！：座れ", collect: "座れ", wrong: "寝ろ", color: "#f97316", neon: "0 0 20px #f97316", isTrap: false },
     { type: "いたわれ", text: "いたわれ！：寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ea580c", neon: "0 0 20px #ea580c", isTrap: false },
 
-    // 🚨 お手つき地雷パネル（0.3秒で消える！反射神経逆手にとる矢印テキスト仕様！）
+    // 🚨 お手つき地雷パネル（おやっさん直伝の逆張りトラップ！1秒で消えて押したら-5点！）
     { type: "ドンペリ", text: "ミルクドンペリ：開けろ ➡️ 閉めろ", collect: "閉める", wrong: "開ける", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
     { type: "ドンペリ", text: "ミルクドンペリ：閉めろ ➡️ 開けろ", collect: "開ける", wrong: "閉める", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
     { type: "いたわれ", text: "いたわれ！：座れ ➡️ 寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ff5500", neon: "0 0 30px #ff5500", isTrap: true },
@@ -292,463 +383,468 @@ var odaiList = [
 ];
  
     var difficulty = "easy";
-var score = 0;
-var currentQ = 0;
-var maxQ = 15;
-var currentCollect = "";
-var isYasumi = false;
-var currentQuestionData = null; // 🟢 現在のお題データを丸ごとホールドする檻！
-var hasAnswered = false; // 🟢 トラップ自動消滅時のお手つき二重判定を防ぐ防衛線！
+    var score = 0;
+    var currentQ = 0;
+    var maxQ = 15;
+    var currentCollect = "";
+    var isYasumi = false;
+    var currentQuestionData = null; // 🟢 現在のお題データを丸ごとホールドする檻！
+    var hasAnswered = false; // 🟢 トラップ自動消滅時のお手つき二重判定を防ぐ防衛線！
 
-// 🧠 タイマー完全分離パケット
-var limitInterval = null; 
-var yasumiTimeout = null;  
-var trapTimeout = null; // 🟢 トラップ専用の0.3秒タイマーの檻！
+    // 🧠 タイマー完全分離パケット
+    var limitInterval = null; 
+    var yasumiTimeout = null;  
+    var trapTimeout = null; // 🟢 トラップ専用のタイマーの檻！
 
-// 🔊 内製オーディオ
-var isAudioOn = true;
-var audioCtx = null;
+    // 🔊 内製オーディオ
+    var isAudioOn = true;
+    var audioCtx = null;
 
-window.onload = function() {
-    renderMonument();
-};
+    window.onload = function() {
+        renderMonument();
+    };
 
-function toggleAudio() {
-    isAudioOn = !isAudioOn;
-    var btn = document.getElementById("audio-toggle");
-    if (isAudioOn) {
-        btn.innerText = "🔊 音：ON";
-        btn.classList.remove("muted");
-    } else {
-        btn.innerText = "🔇 音：OFF";
-        btn.classList.add("muted");
+    // 📖 【新インフラ】説明ボード開閉ロジック
+    function toggleInstructions() {
+        var board = document.getElementById("instruction-board");
+        var btn = document.getElementById("instruction-toggle");
+        if (board.style.display === "block") {
+            board.style.display = "none";
+            btn.innerText = "📖 ネオン作戦指示書を開く（ルール解説）";
+        } else {
+            board.style.display = "block";
+            btn.innerText = "✖ 作戦指示書を閉じる";
+        }
     }
-}
 
-function playSyntheticSound(type) {
-    if (!isAudioOn) return;
-    try {
+    function toggleAudio() {
+        isAudioOn = !isAudioOn;
+        var btn = document.getElementById("audio-toggle");
+        if (isAudioOn) {
+            btn.innerText = "🔊 音：ON";
+            btn.classList.remove("muted");
+        } else {
+            btn.innerText = "🔇 音：OFF";
+            btn.classList.add("muted");
+        }
+    }
+
+    function playSyntheticSound(type) {
+        if (!isAudioOn) return;
+        try {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            var osc = audioCtx.createOscillator();
+            var gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            if (type === "good") {
+                osc.type = "sine";
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); 
+                osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.08); 
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            } else if (type === "bad") {
+                osc.type = "sawtooth";
+                osc.frequency.setValueAtTime(150.00, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(80.00, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.25);
+            }
+        } catch(e) {}
+    }
+
+    function setDifficulty(mode) {
+        difficulty = mode;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    function startGame() {
+        score = 0; currentQ = 0;
+        document.getElementById("start-btn").style.display = "none";
+        document.getElementById("upload-btn").style.display = "none";
+        document.getElementById("x-btn").style.display = "none";
+        document.getElementById("ranking-container").style.display = "block"; 
+        document.getElementById("stage-msg").innerText = "";
+        
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
-        }
-        var osc = audioCtx.createOscillator();
-        var gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
         
-        if (type === "good") {
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); 
-            osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.08); 
-            gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.25);
-        } else if (type === "bad") {
-            osc.type = "sawtooth";
-            osc.frequency.setValueAtTime(150.00, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(80.00, audioCtx.currentTime + 0.2);
-            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.25);
+        fetchLatestRankings();
+        nextQuestion();
+    }
+
+    function killActiveTimers() {
+        if (limitInterval !== null) {
+            clearInterval(limitInterval);
+            limitInterval = null;
         }
-    } catch(e) {}
-}
-
-function setDifficulty(mode) {
-    difficulty = mode;
-    document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-}
-
-function startGame() {
-    score = 0; currentQ = 0;
-    document.getElementById("start-btn").style.display = "none";
-    document.getElementById("upload-btn").style.display = "none";
-    document.getElementById("x-btn").style.display = "none";
-    document.getElementById("ranking-container").style.display = "block"; 
-    document.getElementById("stage-msg").innerText = "";
-    
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (yasumiTimeout !== null) {
+            clearTimeout(yasumiTimeout);
+            yasumiTimeout = null;
+        }
+        if (trapTimeout !== null) { 
+            clearTimeout(trapTimeout);
+            trapTimeout = null;
+        }
     }
-    
-    fetchLatestRankings();
-    nextQuestion();
-}
 
-function killActiveTimers() {
-    if (limitInterval !== null) {
-        clearInterval(limitInterval);
-        limitInterval = null;
-    }
-    if (yasumiTimeout !== null) {
-        clearTimeout(yasumiTimeout);
-        yasumiTimeout = null;
-    }
-    if (trapTimeout !== null) { // 🟢 トラップタイマーも跡形もなく爆破！
-        clearTimeout(trapTimeout);
-        trapTimeout = null;
-    }
-}
+    function createNeonEmojiGrid(lineColor) {
+        let grid = document.createElement("div");
+        grid.className = "iwakan-grid";
+        grid.style.backgroundColor = lineColor; 
+        grid.style.boxShadow = "0 0 15px " + lineColor;
 
-function createNeonEmojiGrid(lineColor) {
-    let grid = document.createElement("div");
-    grid.className = "iwakan-grid";
-    grid.style.backgroundColor = lineColor; 
-    grid.style.boxShadow = "0 0 15px " + lineColor;
+        grid.onclick = function(e) {
+            e.stopPropagation();
+        };
 
-    grid.onclick = function(e) {
-        e.stopPropagation();
-    };
+        let iwakanRow = Math.floor(Math.random() * 4);
+        let iwakanCol = Math.floor(Math.random() * 4);
 
-    let iwakanRow = Math.floor(Math.random() * 4);
-    let iwakanCol = Math.floor(Math.random() * 4);
-
-    for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 4; c++) {
-            let cell = document.createElement("div");
-            cell.className = "iwakan-cell";
-            
-            if (r === iwakanRow && c === iwakanCol) {
-                cell.innerText = "🤪";
-                cell.onclick = function(e) {
-                    e.stopPropagation();
-                    killActiveTimers(); 
-                    score += 10;
-                    playSyntheticSound("good");
-                    nextQuestion();
-                };
-            } else {
-                cell.innerText = "😀";
-                cell.onclick = function(e) {
-                    e.stopPropagation();
-                    killActiveTimers(); 
-                    score -= 5;
-                    playSyntheticSound("bad");
-                    nextQuestion();
-                };
+        for (let r = 0; r < 4; r++) {
+            for (let c = 0; c < 4; c++) {
+                let cell = document.createElement("div");
+                cell.className = "iwakan-cell";
+                
+                if (r === iwakanRow && c === iwakanCol) {
+                    cell.innerText = "🤪";
+                    cell.onclick = function(e) {
+                        e.stopPropagation();
+                        killActiveTimers(); 
+                        score += 10;
+                        playSyntheticSound("good");
+                        nextQuestion();
+                    };
+                } else {
+                    cell.innerText = "😀";
+                    cell.onclick = function(e) {
+                        e.stopPropagation();
+                        killActiveTimers(); 
+                        score -= 5;
+                        playSyntheticSound("bad");
+                        nextQuestion();
+                    };
+                }
+                grid.appendChild(cell);
             }
-            grid.appendChild(cell);
         }
-    }
-    return grid;
-}
-
-function nextQuestion() {
-    killActiveTimers(); 
-    isYasumi = false; 
-    currentCollect = "";
-    hasAnswered = false; // 🟢 回答フラグを初期化！
-
-    var stage = document.getElementById("game-stage");
-    var oldGrid = stage.querySelector(".iwakan-grid");
-    if (oldGrid) stage.removeChild(oldGrid);
-
-    var target = document.getElementById("game-target");
-    target.style.display = "none";
-
-    if (currentQ >= maxQ) {
-        endGame();
-        return;
+        return grid;
     }
 
-    currentQ++;
-    document.getElementById("score-display").innerText = "スコア: " + score;
-    document.getElementById("q-display").innerText = "設問: " + currentQ + " / " + maxQ;
+    function nextQuestion() {
+        killActiveTimers(); 
+        isYasumi = false; 
+        currentCollect = "";
+        hasAnswered = false; 
 
-    // 🎲 お題をランダム抽出してホールド！
-    var odai = odaiList[Math.floor(Math.random() * odaiList.length)];
-    currentQuestionData = odai; 
-    
-    if (odai.type === "休み") {
-        isYasumi = true;
-        currentCollect = "休み";
-        target.style.backgroundColor = odai.color;
-        target.style.boxShadow = odai.neon;
-        target.innerText = odai.text;
-        positionTarget(target, true);
-        target.style.display = "block";
+        var stage = document.getElementById("game-stage");
+        var oldGrid = stage.querySelector(".iwakan-grid");
+        if (oldGrid) stage.removeChild(oldGrid);
 
-        var yasumiTime = 1000;
-        if (difficulty === "expert" || difficulty === "danger") {
-            yasumiTime = Math.floor(Math.random() * 2000) + 1000;
-        }
-        
-        document.getElementById("timer-display").innerText = "⚠️ 休み！耐久！";
-        
-        yasumiTimeout = setTimeout(function() {
-            if (isYasumi) {
-                score += 5;
-                playSyntheticSound("good");
-                nextQuestion();
-            }
-        }, yasumiTime);
+        var target = document.getElementById("game-target");
+        target.style.display = "none";
 
-    } else if (odai.type === "違和感") {
-        var emojiGrid = createNeonEmojiGrid(odai.color);
-        stage.appendChild(emojiGrid);
-
-        currentCollect = "IWAKAN_MODE"; 
-        positionTarget(emojiGrid,false);
-        
-        target.style.left = "-9999px";
-        target.style.top = "-9999px";
-        
-        setModeTimer();
-
-    } else {
-        // 🕹️ 【おやっさん指定：真・各別独立パネル仕様】
-        target.style.backgroundColor = odai.color;
-        target.style.boxShadow = odai.neon;
-        
-        // 画面のボタンに「ミルクドンペリ：開けろ ➡️ 【開ける】」の形で美しくマージ！
-        target.innerText = odai.text + " ➡️ 【" + odai.collect + "】";
-        currentCollect = odai.collect; // 🟢 正解の文字（"開ける" など）をそのまま正解コードにハンダ付け！
-
-        positionTarget(target);
-        target.style.display = "block";
-
-        setModeTimer();
-    }
-}
-
-function setModeTimer() {
-    var timeLimit = 10000; 
-    if (difficulty === "hard") timeLimit = 5000;
-    if (difficulty === "expert") timeLimit = 500;  
-    if (difficulty === "danger") timeLimit = 200;  
-
-    // 🚨 【おやっさんの反射神経トラップ：0.3秒自動消滅魔法】
-    if (currentQuestionData && currentQuestionData.isTrap) {
-        timeLimit = 1000; // 🔥 強制的に0.3秒（300ms）の檻にロックイン！！！
-        
-        // ⏰ 0.3秒誰も押さなかったらペナルティ無しで自動パージして次の問題へ！
-        trapTimeout = setTimeout(function() {
-            if (!hasAnswered) {
-                killActiveTimers();
-                nextQuestion();
-            }
-        }, 1000);
-    }
-
-    var timeLeft = (timeLimit / 1000);
-    document.getElementById("timer-display").innerText = "残り: " + timeLeft.toFixed(2) + "秒";
-    
-    var intervalStep = (difficulty === "danger" || difficulty === "expert" || (currentQuestionData && currentQuestionData.isTrap)) ? 50 : 100;
-    
-    limitInterval = setInterval(function() {
-        timeLeft -= (intervalStep / 1000);
-        if (timeLeft <= 0.001) {
-            killActiveTimers(); 
-            
-            // タイムアウト時の通常ペナルティ（トラップパネルのときはスルー）
-            if (currentQuestionData && !currentQuestionData.isTrap) {
-                score -= 5; 
-                playSyntheticSound("bad");
-            }
-            nextQuestion();
-        } else {
-            document.getElementById("timer-display").innerText = "残り: " + timeLeft.toFixed(2) + "秒";
-        }
-    }, intervalStep);
-}
-
-function positionTarget(element, forceCenter = false) {
-    var stage = document.getElementById("game-stage");
-    element.style.position = "absolute";
-    
-    if (forceCenter || difficulty === "easy") {
-        element.style.left = "50%";
-        element.style.top = "50%"; 
-        element.style.transform = "translate(-50%, -50%)";
-    } else if (difficulty === "normal") {
-        element.style.transform = "none";
-        var positions = [
-            {l: "50%", t: "30px", trans: "translateX(-50%)"},
-            {l: "50%", t: "220px", trans: "translateX(-50%)"},
-            {l: "20px", t: "150px", trans: "translateY(-50%)"},
-            {l: "360px", t: "150px", trans: "translateY(-50%)"},
-            {l: "50%", t: "150px", trans: "translate(-50%, -50%)"}
-        ];
-        var pos = positions[Math.floor(Math.random() * positions.length)];
-        element.style.left = pos.l;
-        element.style.top = pos.t;
-        element.style.transform = pos.trans;
-    } else {
-        element.style.transform = "none";
-        var maxW = stage.clientWidth - (element.className === "iwakan-grid" ? 200 : 180);
-        var maxH = stage.clientHeight - (element.className === "iwakan-grid" ? 200 : 120);
-        var randomX = Math.floor(Math.random() * Math.max(20, maxW)) + 10;
-        var randomY = Math.floor(Math.random() * Math.max(20, maxH)) + 10;
-        element.style.left = randomX + "px";
-        element.style.top = randomY + "px";
-    }
-}
-
-function shareOnX() {
-    var modeName = difficulty.toUpperCase();
-    var tweetText = "【反射神経結果】\n難易度:" + modeName + "で" + score + "点！！！\n\n#いつもカオス診断";
-    var resultUrl = gameWebsiteUrl; 
-    var xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText) + "&url=" + encodeURIComponent(resultUrl);
-    window.open(xUrl, '_blank');
-}
-
-function targetClicked(event) {
-    event.stopPropagation();
-    if (currentCollect === "" || currentCollect === "IWAKAN_MODE" || hasAnswered) return; 
-
-    hasAnswered = true; // 🟢 回隔済みの盾大展開！
-    killActiveTimers(); 
-
-    // 🚨 【おやっさん指定：地雷トラップ判定インフラ】
-    if (currentQuestionData && currentQuestionData.isTrap) {
-        // トラップなのに人の反射神経でポチッと押しちゃったら、問答無用で極悪減点マイナス5点！！！w
-        score -= 5;
-        playSyntheticSound("bad");
-    } else {
-        // 🟢 通常パネル：押せば脳汁スコア大加算プラス10点！！！
-        score += 10;
-        playSyntheticSound("good");
-    }
-    nextQuestion();
-}
-
-function endGame() {
-    killActiveTimers();
-    document.getElementById("game-target").style.setProperty('display','none','important');
-    
-    var msg = "【カオス測定完了だべ！】\n最終総スコア: " + score + " 点！！！\n";
-    if (difficulty === "danger" && score >= 50) msg += "判定: 人間を完全に超越せし神（DANGER制覇）👽🧬🔥";
-    else if (score >= 100) msg += "判定: 異次元の達人（Other World級）🌌🛸";
-    else if (score >= 50) msg += "判定: なかなかやるべ👍⚡️";
-    else msg += "判定: 脳みそお布団コックピット級🛌💤";
-
-    document.getElementById("stage-msg").innerText = msg;
-    document.getElementById("start-btn").style.display = "block";
-    document.getElementById("start-btn").innerText = "🔄 もう一回脳汁を出すべ！";
-    document.getElementById("upload-btn").style.display = "block";
-    document.getElementById("x-btn").style.display = "block";
-    
-    if (difficulty === "danger" && score > 0) {
-        let nameInput = document.getElementById("player-name").value || "名無しの超人類";
-        saveToDangerMonument(nameInput);
-    }
-    
-    fetchLatestRankings();
-}
-
-function saveToDangerMonument(name) {
-    let monumentList = JSON.parse(localStorage.getItem("danger_monument_list")) || [];
-    if (!monumentList.includes(name)) {
-        monumentList.push(name);
-        localStorage.setItem("danger_monument_list", JSON.stringify(monumentList));
-    }
-    renderMonument();
-}
-
-function renderMonument() {
-    let monumentList = JSON.parse(localStorage.getItem("danger_monument_list")) || [];
-    let uiList = document.getElementById("monument-list-ui");
-    if (!uiList) return;
-
-    uiList.innerHTML = "";
-    if (monumentList.length > 0) {
-        monumentList.forEach(name => {
-            let li = document.createElement("li");
-            li.className = "monument-name";
-            li.innerText = "🥷 " + name;
-            uiList.appendChild(li);
-        });
-    } else {
-        let div = document.createElement("div");
-        div.className = "monument-none";
-        div.innerText = "―― 人外いまだ見ぬ…（最初の到達者はオマエだべ！👁️🔥） ――";
-        uiList.appendChild(div);
-    }
-}
-
-function fetchLatestRankings() {
-    var uiList = document.getElementById("ranking-list-ui");
-    uiList.innerHTML = "<li class='ranking-item' style='color:#38bdf8;'>📡 スプレッドシートのノートから最大50位のギネスデータを電波受信中...</li>";
-
-    fetch(googleAppScriptUrl + "?action=getLeaderboard")
-    .then(response => response.json())
-    .then(data => {
-        uiList.innerHTML = "";
-        if (!data || data.length === 0) {
-            uiList.innerHTML = "<li class='ranking-item'>まだデータがありません。初登頂のチャンスだべ！</li>";
+        if (currentQ >= maxQ) {
+            endGame();
             return;
         }
+
+        currentQ++;
+        document.getElementById("score-display").innerText = "スコア: " + score;
+        document.getElementById("q-display").innerText = "設問: " + currentQ + " / " + maxQ;
+
+        var odai = odaiList[Math.floor(Math.random() * odaiList.length)];
+        currentQuestionData = odai; 
         
-        data.slice(0, 50).forEach((player, index) => {
-            let li = document.createElement("div"); 
-            li.className = "ranking-item";
+        if (odai.type === "休み") {
+            isYasumi = true;
+            currentCollect = "休み";
+            target.style.backgroundColor = odai.color;
+            target.style.boxShadow = odai.neon;
+            target.innerText = odai.text;
+            positionTarget(target, true);
+            target.style.display = "block";
+
+            var yasumiTime = 1000;
+            if (difficulty === "expert" || difficulty === "danger") {
+                yasumiTime = Math.floor(Math.random() * 2000) + 1000;
+            }
             
-            let rankClass = "";
-            if (index === 0) rankClass = "rank-top1";
-            else if (index === 1) rankClass = "rank-top2";
-            else if (index === 2) rankClass = "rank-top3";
+            document.getElementById("timer-display").innerText = "⚠️ 休み！耐久！";
             
-            let rankNumText = `<span class="rank-num ${rankClass}">${index + 1}位</span>`;
-            li.innerHTML = `<div>${rankNumText}${player.name}<span class="player-tag">${player.mode}</span></div><div style="color:#00ffcc; font-weight:bold;">${player.score}点</div>`;
-            uiList.appendChild(li);
-        });
-    })
-    .catch(error => {
-        uiList.innerHTML = "";
-        let dummyData = [
-            {name: document.getElementById("player-name").value || "name", mode: "反射設定(" + difficulty.toUpperCase() + ")", score: score},
-            {name: "まさっち社長(Leader)", mode: "反射設定(EXPERT)", score: 140},
-            {name: "AIワトソンくん(助手)", mode: "反射設定(DANGER)", score: -15},
-            {name: "カオス候補生A", mode: "反射設定(HARD)", score: 45},
-            {name: "お布団の住人", mode: "反射設定(EASY)", score: 20}
-        ];
-        for(let i=1; i<=45; i++) {
-            dummyData.push({name: "ステルス候補生" + i, mode: "反射設定(NORMAL)", score: Math.floor(Math.random() * 40) - 10});
+            yasumiTimeout = setTimeout(function() {
+                if (isYasumi) {
+                    score += 5;
+                    playSyntheticSound("good");
+                    nextQuestion();
+                }
+            }, yasumiTime);
+
+        } else if (odai.type === "違和感") {
+            var emojiGrid = createNeonEmojiGrid(odai.color);
+            stage.appendChild(emojiGrid);
+
+            currentCollect = "IWAKAN_MODE"; 
+            positionTarget(emojiGrid,false);
+            
+            target.style.left = "-9999px";
+            target.style.top = "-9999px";
+            
+            setModeTimer();
+
+        } else {
+            target.style.backgroundColor = odai.color;
+            target.style.boxShadow = odai.neon;
+            
+            target.innerText = odai.text + " ➡️ 【" + odai.collect + "】";
+            currentCollect = odai.collect; 
+
+            positionTarget(target);
+            target.style.display = "block";
+
+            setModeTimer();
         }
-        dummyData.sort((a,b) => b.score - a.score);
-        
-        dummyData.forEach((player, index) => {
-            let li = document.createElement("li");
-            li.className = "ranking-item";
-            let rankClass = "";
-            if (index === 0) rankClass = "rank-top1";
-            else if (index === 1) rankClass = "rank-top2";
-            else if (index === 2) rankClass = "rank-top3";
+    }
+
+    function setModeTimer() {
+        var timeLimit = 10000; 
+        if (difficulty === "hard") timeLimit = 5000;
+        if (difficulty === "expert") timeLimit = 500;  
+        if (difficulty === "danger") timeLimit = 200;  
+
+        // 🚨 【おやっさん指定：トラップ猶予時間を 1秒（1000ms）へ神調整パッチ！】
+        if (currentQuestionData && currentQuestionData.isTrap) {
+            timeLimit = 1000; // 🔥 トラップは一律「1秒」の檻に完全ホールド！！！
             
-            let rankNumText = `<span class="rank-num ${rankClass}">${index + 1}位</span>`;
-            li.innerHTML = `<div>${rankNumText}${player.name}<span class="player-tag">${player.mode}</span></div><div style="color:#00ffcc; font-weight:bold;">${player.score}点</div>`;
-            uiList.appendChild(li);
+            // ⏰ 1秒間誰も押さなかったらペナルティ無しで自動パージして次の問題へ！
+            trapTimeout = setTimeout(function() {
+                if (!hasAnswered) {
+                    killActiveTimers();
+                    nextQuestion();
+                }
+            }, 1000); 
+        }
+
+        var timeLeft = (timeLimit / 1000);
+        document.getElementById("timer-display").innerText = "残り: " + timeLeft.toFixed(2) + "秒";
+        
+        var intervalStep = (difficulty === "danger" || difficulty === "expert" || (currentQuestionData && currentQuestionData.isTrap)) ? 50 : 100;
+        
+        limitInterval = setInterval(function() {
+            timeLeft -= (intervalStep / 1000);
+            if (timeLeft <= 0.001) {
+                killActiveTimers(); 
+                
+                if (currentQuestionData && !currentQuestionData.isTrap) {
+                    score -= 5; 
+                    playSyntheticSound("bad");
+                }
+                nextQuestion();
+            } else {
+                document.getElementById("timer-display").innerText = "残り: " + timeLeft.toFixed(2) + "秒";
+            }
+        }, intervalStep);
+    }
+
+    function positionTarget(element, forceCenter = false) {
+        var stage = document.getElementById("game-stage");
+        element.style.position = "absolute";
+        
+        if (forceCenter || difficulty === "easy") {
+            element.style.left = "50%";
+            element.style.top = "50%"; 
+            element.style.transform = "translate(-50%, -50%)";
+        } else if (difficulty === "normal") {
+            element.style.transform = "none";
+            var positions = [
+                {l: "50%", t: "30px", trans: "translateX(-50%)"},
+                {l: "50%", t: "220px", trans: "translateX(-50%)"},
+                {l: "20px", t: "150px", trans: "translateY(-50%)"},
+                {l: "360px", t: "150px", trans: "translateY(-50%)"},
+                {l: "50%", t: "150px", trans: "translate(-50%, -50%)"}
+            ];
+            var pos = positions[Math.floor(Math.random() * positions.length)];
+            element.style.left = pos.l;
+            element.style.top = pos.t;
+            element.style.transform = pos.trans;
+        } else {
+            element.style.transform = "none";
+            var maxW = stage.clientWidth - (element.className === "iwakan-grid" ? 200 : 180);
+            var maxH = stage.clientHeight - (element.className === "iwakan-grid" ? 200 : 120);
+            var randomX = Math.floor(Math.random() * Math.max(20, maxW)) + 10;
+            var randomY = Math.floor(Math.random() * Math.max(20, maxH)) + 10;
+            element.style.left = randomX + "px";
+            element.style.top = randomY + "px";
+        }
+    }
+
+    function shareOnX() {
+        var modeName = difficulty.toUpperCase();
+        var tweetText = "【反射神経結果】\n難易度:" + modeName + "で" + score + "点！！！\n\n#いつもカオス診断";
+        var resultUrl = gameWebsiteUrl; 
+        var xUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText) + "&url=" + encodeURIComponent(resultUrl);
+        window.open(xUrl, '_blank');
+    }
+
+    function targetClicked(event) {
+        event.stopPropagation();
+        if (currentCollect === "" || currentCollect === "IWAKAN_MODE" || hasAnswered) return; 
+
+        hasAnswered = true; 
+        killActiveTimers(); 
+
+        if (currentQuestionData && currentQuestionData.isTrap) {
+            score -= 5;
+            playSyntheticSound("bad");
+        } else {
+            score += 10;
+            playSyntheticSound("good");
+        }
+        nextQuestion();
+    }
+
+    function endGame() {
+        killActiveTimers();
+        document.getElementById("game-target").style.setProperty('display','none','important');
+        
+        var msg = "【カオス測定完了だべ！】\n最終総スコア: " + score + " 点！！！\n";
+        if (difficulty === "danger" && score >= 50) msg += "判定: 人間を完全に超越せし神（DANGER制覇）👽🧬🔥";
+        else if (score >= 100) msg += "判定: 異次元の達人（Other World級）🌌🛸";
+        else if (score >= 50) msg += "判定: なかなかやるべ👍⚡️";
+        else msg += "判定: 脳みそお布団コックピット級🛌💤";
+
+        document.getElementById("stage-msg").innerText = msg;
+        document.getElementById("start-btn").style.display = "block";
+        document.getElementById("start-btn").innerText = "🔄 もう一回脳汁を出すべ！";
+        document.getElementById("upload-btn").style.display = "block";
+        document.getElementById("x-btn").style.display = "block";
+        
+        if (difficulty === "danger" && score > 0) {
+            let nameInput = document.getElementById("player-name").value || "名無しの超人類";
+            saveToDangerMonument(nameInput);
+        }
+        
+        fetchLatestRankings();
+    }
+
+    function saveToDangerMonument(name) {
+        let monumentList = JSON.parse(localStorage.getItem("danger_monument_list")) || [];
+        if (!monumentList.includes(name)) {
+            monumentList.push(name);
+            localStorage.setItem("danger_monument_list", JSON.stringify(monumentList));
+        }
+        renderMonument();
+    }
+
+    function renderMonument() {
+        let monumentList = JSON.parse(localStorage.getItem("danger_monument_list")) || [];
+        let uiList = document.getElementById("monument-list-ui");
+        if (!uiList) return;
+
+        uiList.innerHTML = "";
+        if (monumentList.length > 0) {
+            monumentList.forEach(name => {
+                let li = document.createElement("li");
+                li.className = "monument-name";
+                li.innerText = "🥷 " + name;
+                uiList.appendChild(li);
+            });
+        } else {
+            let div = document.createElement("div");
+            div.className = "monument-none";
+            div.innerText = "―― 人外いまだ見ぬ…（最初の到達者はオマエだべ！👁️🔥） ――";
+            uiList.appendChild(div);
+        }
+    }
+
+    function fetchLatestRankings() {
+        var uiList = document.getElementById("ranking-list-ui");
+        uiList.innerHTML = "<li class='ranking-item' style='color:#38bdf8;'>📡 スプレッドシートのノートから最大50位のギネスデータを電波受信中...</li>";
+
+        fetch(googleAppScriptUrl + "?action=getLeaderboard")
+        .then(response => response.json())
+        .then(data => {
+            uiList.innerHTML = "";
+            if (!data || data.length === 0) {
+                uiList.innerHTML = "<li class='ranking-item'>まだデータがありません。初登頂のチャンスだべ！</li>";
+                return;
+            }
+            
+            data.slice(0, 50).forEach((player, index) => {
+                let li = document.createElement("div"); 
+                li.className = "ranking-item";
+                
+                let rankClass = "";
+                if (index === 0) rankClass = "rank-top1";
+                else if (index === 1) rankClass = "rank-top2";
+                else if (index === 2) rankClass = "rank-top3";
+                
+                let rankNumText = `<span class="rank-num ${rankClass}">${index + 1}位</span>`;
+                li.innerHTML = `<div>${rankNumText}${player.name}<span class="player-tag">${player.mode}</span></div><div style="color:#00ffcc; font-weight:bold;">${player.score}点</div>`;
+                uiList.appendChild(li);
+            });
+        })
+        .catch(error => {
+            uiList.innerHTML = "";
+            let dummyData = [
+                {name: document.getElementById("player-name").value || "name", mode: "反射設定(" + difficulty.toUpperCase() + ")", score: score},
+                {name: "まさっち社長(Leader)", mode: "反射設定(EXPERT)", score: 140},
+                {name: "AIワトソンくん(助手)", mode: "反射設定(DANGER)", score: -15},
+                {name: "カオス候補生A", mode: "反射設定(HARD)", score: 45},
+                {name: "お布団の住人", mode: "反射設定(EASY)", score: 20}
+            ];
+            for(let i=1; i<=45; i++) {
+                dummyData.push({name: "ステルス候補生" + i, mode: "反射設定(NORMAL)", score: Math.floor(Math.random() * 40) - 10});
+            }
+            dummyData.sort((a,b) => b.score - a.score);
+            
+            dummyData.forEach((player, index) => {
+                let li = document.createElement("li");
+                li.className = "ranking-item";
+                let rankClass = "";
+                if (index === 0) rankClass = "rank-top1";
+                else if (index === 1) rankClass = "rank-top2";
+                else if (index === 2) rankClass = "rank-top3";
+                
+                let rankNumText = `<span class="rank-num ${rankClass}">${index + 1}位</span>`;
+                li.innerHTML = `<div>${rankNumText}${player.name}<span class="player-tag">${player.mode}</span></div><div style="color:#00ffcc; font-weight:bold;">${player.score}点</div>`;
+                uiList.appendChild(li);
+            });
         });
-    });
-}
+    }
 
-function sendToGoogleScore() {
-    var nameInput = document.getElementById("player-name").value;
-    var payload = {
-        name: nameInput || "名無しのカオス候補生",
-        score: score,
-        mode: "反射設定(" + difficulty.toUpperCase() + ")"
-    };
+    function sendToGoogleScore() {
+        var nameInput = document.getElementById("player-name").value;
+        var payload = {
+            name: nameInput || "名無しのカオス候補生",
+            score: score,
+            mode: "反射設定(" + difficulty.toUpperCase() + ")"
+        };
 
-    fetch(googleAppScriptUrl, {
-        method: "POST",
-        mode: "no-cors", 
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    })
-    .then(() => {
-        alert("緑のノートに魂 of ネオンスコアが彫り込まれたべ！👍😏🤟");
-        fetchLatestRankings(); 
-    })
-    .catch(error => alert("電波障害だべ！！！😭❌"));
-}
-    
+        fetch(googleAppScriptUrl, {
+            method: "POST",
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        })
+        .then(() => {
+            alert("緑のノートに魂 of ネオンスコアが彫り込まれたべ！👍😏🤟");
+            fetchLatestRankings(); 
+        })
+        .catch(error => alert("電波障害だべ！！！😭❌"));
+    }
 </script>
 
 </body>
