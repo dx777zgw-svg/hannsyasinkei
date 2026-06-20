@@ -351,7 +351,7 @@
         <button class="mode-btn" onclick="setDifficulty('normal')">ふつー<br>(normal)</button>
         <button class="mode-btn" onclick="setDifficulty('hard')">鬼かよ！<br>(hard)</button>
         <button class="mode-btn" onclick="setDifficulty('expert')">達人<br>(1.5秒)</button>
-        <button class="mode-btn danger-zone" onclick="setDifficulty('danger')">人外<br>(DANGER)</button>
+        <button class="mode-btn danger-zone" onclick="setDifficulty('danger')">人外<br>(0.6秒)</button>
     </div>
 
     <div class="audio-toggle-container">
@@ -719,16 +719,21 @@ var odaiList = [
             element.style.top = "50%"; 
             element.style.transform = "translate(-50%, -50%)";
         } else if (difficulty === "normal") {
-            element.style.transform = "none";
+            // 🟢 スマホでの画面右側はみ出し・非表示バグ完全大改修パケット！
             var positions = [
-                {l: "50%", t: "30px", trans: "translateX(-50%)"},
-                {l: "50%", t: "220px", trans: "translateX(-50%)"},
-                {l: "20px", t: "150px", trans: "translateY(-50%)"},
-                {l: "360px", t: "150px", trans: "translateY(-50%)"},
-                {l: "50%", t: "150px", trans: "translate(-50%, -50%)"}
+                {l: "50%", t: "40px", trans: "translateX(-50%)"},
+                {l: "50%", t: "200px", trans: "translateX(-50%)"},
+                {l: "10px", t: "50%", trans: "translateY(-50%)"},
+                {l: "auto", r: "10px", t: "50%", trans: "translateY(-50%)"},
+                {l: "50%", t: "50%", trans: "translate(-50%, -50%)"}
             ];
             var pos = positions[Math.floor(Math.random() * positions.length)];
+            
+            // 座標を割り振る前に一度左右の指定をクリーンアップ
+            element.style.right = "auto";
+            
             element.style.left = pos.l;
+            if(pos.r) element.style.right = pos.r;
             element.style.top = pos.t;
             element.style.transform = pos.trans;
         } else {
