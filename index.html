@@ -525,7 +525,7 @@ function setModeTimer() {
 
     // 🚨 【おやっさんの反射神経トラップ：0.3秒自動消滅魔法】
     if (currentQuestionData && currentQuestionData.isTrap) {
-        timeLimit = 300; // 🔥 強制的に0.3秒（300ms）の檻にロックイン！！！
+        timeLimit = 1000; // 🔥 強制的に0.3秒（300ms）の檻にロックイン！！！
         
         // ⏰ 0.3秒誰も押さなかったらペナルティ無しで自動パージして次の問題へ！
         trapTimeout = setTimeout(function() {
@@ -533,7 +533,7 @@ function setModeTimer() {
                 killActiveTimers();
                 nextQuestion();
             }
-        }, 300);
+        }, 1000);
     }
 
     var timeLeft = (timeLimit / 1000);
