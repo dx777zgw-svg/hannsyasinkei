@@ -36,7 +36,7 @@
             letter-spacing: 1px;
         }
         
-        /* 📖 【新インフラ】親切設計・ネオン作戦指示書（説明ボード） */
+        /* 📖 親切設計・ネオン作戦指示書（説明ボード） */
         .instruction-toggle-btn {
             width: 100%;
             padding: 8px;
@@ -47,7 +47,7 @@
             border: 1px dashed #38bdf8;
             border-radius: 8px;
             cursor: pointer;
-            margin-bottom: 15px;
+            margin-bottom: 8px; /* 🟢 下のランキングボタンとの間隔を美しく調整だべ！ */
             transition: all 0.2s;
             box-shadow: 0 0 8px rgba(56, 189, 248, 0.1);
         }
@@ -55,8 +55,29 @@
             background: #1e293b;
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
         }
+        
+        /* 🏆 【新インフラ】いつでもランキング閲覧トグルボタン */
+        .ranking-toggle-btn {
+            width: 100%;
+            padding: 8px;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #0f172a;
+            color: #00ffcc;
+            border: 1px dashed #00ffcc;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 0 8px rgba(0, 255, 204, 0.1);
+        }
+        .ranking-toggle-btn:hover {
+            background: #112624;
+            box-shadow: 0 0 12px rgba(0, 255, 204, 0.4);
+        }
+
         .instruction-box {
-            display: none; /* 初期状態はスマートに格納だべ！ */
+            display: none; 
             background: #090d16;
             border: 1px solid #1f2937;
             padding: 15px;
@@ -143,6 +164,11 @@
             margin-bottom: 20px;
             border: 2px solid #334155;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
         }
 
         /* 🔴 通常お題・出現ターゲット */
@@ -268,7 +294,15 @@
             border: none; border-radius: 8px; cursor: pointer; margin-top: 10px;
             transition: all 0.2s;
         }
-        .btn-start { background-color: #38bdf8; color: #0d0f12; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+        .btn-stage-start {
+            width: auto !important;
+            min-width: 280px;
+            padding: 14px 25px;
+            background-color: #38bdf8;
+            color: #0d0f12;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            z-index: 10; 
+        }
         .btn-send { background-color: #2ecc71; color: #fff; box-shadow: 0 0 15px rgba(46, 204, 113, 0.4); }
         .btn-x { background-color: #ffffff; color: #000000; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
         button.action-btn:hover { opacity: 0.9; transform: translateY(-1px); }
@@ -280,7 +314,12 @@
     <h1>カオス反射測定器</h1>
     <div class="subtitle">Produced by MVP 3.0.7 最終神話スペック</div>
 
+    <!-- 📖 親切設計・ネオン作戦指示書ボード -->
     <button id="instruction-toggle" class="instruction-toggle-btn" onclick="toggleInstructions()">📖 ネオン作戦指示書を開く（ルール解説）</button>
+    
+    <!-- 🏆 【新インフラ】いつでも確認できるスコアランキング表ゲート -->
+    <button id="ranking-toggle" class="ranking-toggle-btn" onclick="toggleRankingBoard()">🏆 カオスギネスランキング表を開く</button>
+
     <div id="instruction-board" class="instruction-box">
         <div class="instruction-title">📡 盤面マトリクス・コマンド識別仕様</div>
         <table class="instruction-table">
@@ -296,7 +335,7 @@
             </tr>
             <tr>
                 <th>違和感モード</th>
-                <td><span class="instruction-badge badge-iwakan">追跡</span> 16マスのマトリクス</td>
+                <td><span class="instruction-badge badge-iwakan">追跡</span> 16マスマトリクス</td>
                 <td>大量の「😀」の中に1匹だけ潜む **「🤪」を狙い撃て！**（成功：+10点 / 誤爆・時間切れ：-5点）</td>
             </tr>
             <tr>
@@ -319,9 +358,11 @@
         <button id="audio-toggle" class="audio-toggle-btn" onclick="toggleAudio()">🔊 音：ON</button>
     </div>
 
+    <!-- 📺 異次元ゲームステージ -->
     <div id="game-stage">
         <div id="game-target" onclick="targetClicked(event)"></div>
-        <div style="color: #475569; font-size: 1.2em; font-weight: bold; padding-top: 150px; padding-left: 10px; padding-right: 10px;" id="stage-msg">【難易度を選んで、STARTボタンをブチ叩くべ！】</div>
+        <div style="color: #475569; font-size: 1.2em; font-weight: bold; padding: 0 10px;" id="stage-msg">【難易度を選んで、STARTボタンをブチ叩くべ！】</div>
+        <button class="action-btn btn-stage-start" id="start-btn" onclick="startGame()">⚔️ ネオン測定ゲート、大起動！！！</button>
     </div>
 
     <div class="info-bar">
@@ -335,10 +376,10 @@
         <input type="text" id="player-name" placeholder="name" value="name">
     </div>
 
-    <button class="action-btn btn-start" id="start-btn" onclick="startGame()">⚔️ ネオン測定ゲート、大起動！！！</button>
     <button class="action-btn btn-send" id="upload-btn" onclick="sendToGoogleScore()" style="display:none;">🟢 緑 of ノート（Google）へ順位送信べ！</button>
     <button class="action-btn btn-x" id="x-btn" onclick="shareOnX()" style="display:none;">𝕏 結果を「#いつもカオス診断」に放流！</button>
 
+    <!-- 🏆 ランキング表ボード（初期状態はスマートに非表示、いつでも開閉可能へ進化！） -->
     <div id="ranking-container" class="ranking-box" style="display:none;">
         <div class="ranking-title">🏆 カオスギネス・50位特設ランキング表</div>
         <div class="ranking-scroll-container">
@@ -361,21 +402,18 @@
     var gameWebsiteUrl = "https://dx777zgw-svg.github.io/hannsyasinkei/"; 
 
     
- // 📦 カオスお題データベース（おやっさん監修・矢印トラップ＆各別パネル完全一致仕様）
+ // 📦 カオスお題データベース
 var odaiList = [
-    // 🟢 通常パネル（お題通りのパネルを押せばスコア加算！）
     { type: "ドンペリ", text: "ミルクドンペリ：開けろ", collect: "開ける", wrong: "閉める", color: "#a855f7", neon: "0 0 20px #a855f7", isTrap: false },
     { type: "ドンペリ", text: "ミルクドンペリ：閉めろ", collect: "閉める", wrong: "開ける", color: "#7c3aed", neon: "0 0 20px #7c3aed", isTrap: false },
     { type: "いたわれ", text: "いたわれ！：座れ", collect: "座れ", wrong: "寝ろ", color: "#f97316", neon: "0 0 20px #f97316", isTrap: false },
     { type: "いたわれ", text: "いたわれ！：寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ea580c", neon: "0 0 20px #ea580c", isTrap: false },
 
-    // 🚨 お手つき地雷パネル（おやっさん直伝の逆張りトラップ！1秒で消えて押したら-5点！）
     { type: "ドンペリ", text: "ミルクドンペリ：開けろ ➡️ 閉めろ", collect: "閉める", wrong: "開ける", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
     { type: "ドンペリ", text: "ミルクドンペリ：閉めろ ➡️ 開けろ", collect: "開ける", wrong: "閉める", color: "#ff0055", neon: "0 0 30px #ff0055", isTrap: true },
     { type: "いたわれ", text: "いたわれ！：座れ ➡️ 寝ろ", collect: "寝ろ", wrong: "座れ", color: "#ff5500", neon: "0 0 30px #ff5500", isTrap: true },
     { type: "いたわれ", text: "いたわれ！：寝ろ ➡️ 座れ", collect: "座れ", wrong: "寝ろ", color: "#ff5500", neon: "0 0 30px #ff5500", isTrap: true },
 
-    // 違和感とお休みは絶対防衛線ホールド！
     { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#06b6d4", neon: "0 0 20px #06b6d4", isTrap: false },
     { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#0d9488", neon: "0 0 20px #0d9488", isTrap: false },
     { type: "違和感", text: "違和感 (🤪) を狙い撃て！", color: "#10b981", neon: "0 0 20px #10b981", isTrap: false },
@@ -388,13 +426,13 @@ var odaiList = [
     var maxQ = 15;
     var currentCollect = "";
     var isYasumi = false;
-    var currentQuestionData = null; // 🟢 現在のお題データを丸ごとホールドする檻！
-    var hasAnswered = false; // 🟢 トラップ自動消滅時のお手つき二重判定を防ぐ防衛線！
+    var currentQuestionData = null; 
+    var hasAnswered = false; 
 
     // 🧠 タイマー完全分離パケット
     var limitInterval = null; 
     var yasumiTimeout = null;  
-    var trapTimeout = null; // 🟢 トラップ専用のタイマーの檻！
+    var trapTimeout = null; 
 
     // 🔊 内製オーディオ
     var isAudioOn = true;
@@ -402,9 +440,10 @@ var odaiList = [
 
     window.onload = function() {
         renderMonument();
+        fetchLatestRankings(); // 🟢 起動した瞬間に裏で最新ランキングを自動受信して親切設計だべ！
     };
 
-    // 📖 【新インフラ】説明ボード開閉ロジック
+    // 📖 説明ボード開閉ロジック
     function toggleInstructions() {
         var board = document.getElementById("instruction-board");
         var btn = document.getElementById("instruction-toggle");
@@ -414,6 +453,20 @@ var odaiList = [
         } else {
             board.style.display = "block";
             btn.innerText = "✖ 作戦指示書を閉じる";
+        }
+    }
+
+    // 🏆 【新インフラ】スコアランキング表のいつでも開閉トグルロジック！
+    function toggleRankingBoard() {
+        var board = document.getElementById("ranking-container");
+        var btn = document.getElementById("ranking-toggle");
+        if (board.style.display === "block") {
+            board.style.display = "none";
+            btn.innerText = "🏆 カオスギネスランキング表を開く";
+        } else {
+            board.style.display = "block";
+            btn.innerText = "✖ ランキング表を閉じる";
+            fetchLatestRankings(); // 開くたびに最新データを再電波受信！
         }
     }
 
@@ -471,10 +524,11 @@ var odaiList = [
 
     function startGame() {
         score = 0; currentQ = 0;
-        document.getElementById("start-btn").style.display = "none";
+        document.getElementById("start-btn").style.setProperty('display','none','important'); 
         document.getElementById("upload-btn").style.display = "none";
         document.getElementById("x-btn").style.display = "none";
-        document.getElementById("ranking-container").style.display = "block"; 
+        document.getElementById("ranking-container").style.display = "block"; // プレイ中〜終了時は常時大開国！
+        document.getElementById("ranking-toggle").innerText = "✖ ランキング表を閉じる";
         document.getElementById("stage-msg").innerText = "";
         
         if (!audioCtx) {
@@ -624,11 +678,9 @@ var odaiList = [
         if (difficulty === "expert") timeLimit = 500;  
         if (difficulty === "danger") timeLimit = 200;  
 
-        // 🚨 【おやっさん指定：トラップ猶予時間を 1秒（1000ms）へ神調整パッチ！】
         if (currentQuestionData && currentQuestionData.isTrap) {
-            timeLimit = 1000; // 🔥 トラップは一律「1秒」の檻に完全ホールド！！！
+            timeLimit = 1000; 
             
-            // ⏰ 1秒間誰も押さなかったらペナルティ無しで自動パージして次の問題へ！
             trapTimeout = setTimeout(function() {
                 if (!hasAnswered) {
                     killActiveTimers();
@@ -726,8 +778,11 @@ var odaiList = [
         else msg += "判定: 脳みそお布団コックピット級🛌💤";
 
         document.getElementById("stage-msg").innerText = msg;
-        document.getElementById("start-btn").style.display = "block";
-        document.getElementById("start-btn").innerText = "🔄 もう一回脳汁を出すべ！";
+        
+        var startBtn = document.getElementById("start-btn");
+        startBtn.style.setProperty('display','block','important');
+        startBtn.innerText = "🔄 もう一回脳汁を出すべ！";
+        
         document.getElementById("upload-btn").style.display = "block";
         document.getElementById("x-btn").style.display = "block";
         
@@ -840,7 +895,7 @@ var odaiList = [
             body: JSON.stringify(payload)
         })
         .then(() => {
-            alert("緑のノートに魂 of ネオンスコアが彫り込まれたべ！👍😏🤟");
+            alert("緑 of ノートに魂 of ネオンスコアが彫り込まれたべ！👍😏🤟");
             fetchLatestRankings(); 
         })
         .catch(error => alert("電波障害だべ！！！😭❌"));
